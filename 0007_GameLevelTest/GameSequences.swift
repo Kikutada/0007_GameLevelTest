@@ -288,7 +288,7 @@ class CgSceneAttractMode: CgSceneFrame {
                     for i in count_animationOfGhost ..< 4 {
                         sprite.startAnimation(i+4, sequence: [72,73], timePerFrame: 0.12, repeat: true)
                     }
-                    goToSequence(number: 19)
+                    goToNextSequence(19)
                 } else {
                     goToNextSequence()
                 }

@@ -78,6 +78,7 @@ class CgSceneMaze: CgSceneFrame, ActorDeligate {
     private var specialTarget: CgSpecialTarget!
     private var ghosts = CgGhostManager()
     private var counter_judgeGhostsWavyChase: Int = 0
+    private var counter_frame: Int = 0
 
     private var scene_intermission: [CgSceneFrame] = []
 
@@ -105,7 +106,7 @@ class CgSceneMaze: CgSceneFrame, ActorDeligate {
     enum EnGameModelState: Int {
         case Init = 0
         case Start, Ready, Go, Updating, ReturnToUpdating, RoundClear, PrepareFlashMaze, FlashMaze,
-             PlayerMiss, PlayerDisappeared, PlayerRestart, GameOver, Intermission
+             PlayerMiss, PlayerDisappeared, PlayerRestart, GameOver, Intermission, Demo
     }
 
     /// Handle sequence
@@ -114,9 +115,10 @@ class CgSceneMaze: CgSceneFrame, ActorDeligate {
     /// - Returns: If true, continue the sequence, if not, end the sequence.
     override func handleSequence(sequence: Int) -> Bool {
         guard let state: EnGameModelState = EnGameModelState(rawValue: sequence) else { return false }
-
+        
         switch state {
             case .Init: sequenceInit()
+            case .Demo: sequenceDemo()
             case .Start: sequenceStart()
             case .Ready: sequenceReady()
             case .Go: sequenceGo()
@@ -134,7 +136,10 @@ class CgSceneMaze: CgSceneFrame, ActorDeligate {
                 // Stop and exit running sequence.
                 return false
         }
-        
+
+        // Count by frame
+        context.counterByFrame += 1
+
         // Continue running sequence.
         return true
     }
@@ -144,7 +149,23 @@ class CgSceneMaze: CgSceneFrame, ActorDeligate {
     // ============================================================
     func sequenceInit() {
         drawBackground()
-        goToNextSequence()
+        context.counterByFrame = 0
+        goToNextSequence(context.demo ? .Demo : .Start)
+    }
+    
+    func sequenceDemo() {
+        context.demoSequence = 0
+        context.numberOfPlayers = 1
+        context.resetRound()
+        context.numberOfFeeds = drawMazeWithSettingValuesAndAttributes()
+        sound.enableOutput(false)
+        printPlayers(appearance: true)
+        printCredit()
+        player.reset()
+        ghosts.reset()
+        specialTarget.reset()
+        ptsManager.reset()
+        goToNextSequence(.Go)
     }
     
     func sequenceStart() {
@@ -170,7 +191,11 @@ class CgSceneMaze: CgSceneFrame, ActorDeligate {
     }
     
     func sequenceGo() {
-        printStateMessage(.ClearReady)
+        if context.demo {
+            printStateMessage(.GameOver)
+        } else {
+            printStateMessage(.ClearReady)
+        }
         drawPowerFeed(state: .Blinking)
         player.start()
         ghosts.start()
@@ -181,6 +206,15 @@ class CgSceneMaze: CgSceneFrame, ActorDeligate {
     }
     
     func sequenceUpdating() {
+
+        // Operate player in demonstration automatically.
+        if context.demo {
+            let direction = context.getOperationForDemo()
+            if direction != .None {
+                player.targetDirecition = direction
+            }
+        }
+
         // Player checks to collide ghost.
         let collisionResult = ghosts.detectCollision(playerPosition: player.position)
 
@@ -479,6 +513,7 @@ class CgSceneMaze: CgSceneFrame, ActorDeligate {
     }
 
     func addScore(pts: Int) {
+        guard !context.demo else { return }
         context.score += pts
         printPlayerScore()
         if context.updateHighScore() {
@@ -494,6 +529,16 @@ class CgSceneMaze: CgSceneFrame, ActorDeligate {
         }
     }
 
+    func clear() {
+        player.stop()
+        ghosts.stop()
+        specialTarget.stop()
+        ptsManager.stop()
+        player.clear()
+        ghosts.clear()
+        ghosts.drawTargetPosition(show: false)
+    }
+    
     struct StMazePosition {
         var column: Int
         var row: Int

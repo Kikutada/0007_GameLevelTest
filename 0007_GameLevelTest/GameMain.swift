@@ -14,6 +14,7 @@ class CgGameMain : CgSceneFrame {
     private var scene_attractMode: CgSceneAttractMode!
     private var scene_maze: CgSceneMaze!
     private var scene_deposit: CgSceneDeposit!
+    private var attarctMode: Int = 0
 
     init(skscene: SKScene) {
         super.init()
@@ -50,15 +51,36 @@ class CgGameMain : CgSceneFrame {
         
         switch sequence {
             case  0:
-                if !scene_attractMode.enabled {
-                    scene_attractMode.resetSequence()
-                    scene_attractMode.startSequence()
+                switch attarctMode {
+                    case 0:
+                        scene_attractMode.resetSequence()
+                        scene_attractMode.startSequence()
+                        attarctMode = 1
+                    case 1:
+                        if !scene_attractMode.enabled {
+                            context.demo = true
+                            sound.enableOutput(false)
+                            scene_maze.resetSequence()
+                            scene_maze.startSequence()
+                            attarctMode = 2
+                        }
+                    case 2:
+                        if !scene_maze.enabled {
+                            attarctMode = 0
+                        }
+                    default:
+                        break
                 }
 
+
             case 1:
-                context.credit += 1
+                context.demo = false
                 scene_attractMode.stopSequence()
                 scene_attractMode.clear()
+                scene_maze.stopSequence()
+                scene_maze.clear()
+
+                context.credit += 1
                 scene_deposit.resetSequence()
                 scene_deposit.startSequence()
                 sound.enableOutput(true)
@@ -78,7 +100,8 @@ class CgGameMain : CgSceneFrame {
                 
             case 4:
                 if !scene_maze.enabled {
-                    goToSequence(number: 0)
+                    attarctMode = 0
+                    goToNextSequence(0)
                 }
 
             default:

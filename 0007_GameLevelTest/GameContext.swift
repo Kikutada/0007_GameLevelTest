@@ -30,8 +30,6 @@ class CgContext {
     var score_extendPlayer: Int = 0
     var score_extendedPlayer: Bool = false
     
-    var elapsedTime: Int = 0
-    
     var numberOfFeeds: Int = 0
     var playerMiss: Bool = false
     var numberOfFeedsEatedByMiss: Int = 0
@@ -47,6 +45,10 @@ class CgContext {
     var timeWithPower: Int = 0
     var timeNotToEat: Int = 0
     var intermission: Int = 0
+
+    var demo: Bool = false
+    var demoSequence: Int = 0
+    var counterByFrame: Int = 0
     
     // ============================================================
     //  Settings
@@ -95,6 +97,23 @@ class CgContext {
               ghost: 19, ghostInSpurt: 20, ghostInPow: 10, ghostInWarp: 9 )
         ]
 
+    let table_operationInDemo: [ (frameCount: Int, direction: EnDirection) ] = [
+        (3, .Left), (33, .Down), (56, .Right), (76, .Down), (101, .Right), (211, .Up), (247, .Left),
+        (259, .Up), (284, .Right), (305, .Up), (327, .Left), (379, .Up), (462, .Left),
+        (515, .Left), (558, .Down), (578, .Left), (598, .Up), (702, .Left), (732, .Down),
+        (811, .Right), (893, .Up), (934, .Left), (1004, .Down), (1034, .Right),
+        (1168, .Down), (1249, .Right), (1341, .Down), (1392, .Left), (1439, .Down),
+        (1468, .Right), (1486, .Down), (1507, .Right), (1570, .Up), (1630, .Up),
+        (1665, .Right), (1826, .Up), (1903, .Left), (1974, .Down), (2002, .Left),
+        (2028, .Down), (2054, .Left), (2070, .Up), (2098, .Left), (2123, .Up)
+        /*
+        (1, .Right), (60, .Down), (80, .Right), (110, .Down), (150, .Left), (310, .Up), (380, .Right), (410, .Up),
+        (500, .Right), (530, .Up), (550, .Up), (570, .Right), (590, .Up), (610, .Left), (630, .Up), (660, .Left),
+        (740, .Down), (820, .Up), (840, .Right), (880, .Down), (960, .Left), (1083, .Up), (1120, .Down), (1172, .Right),
+        (1236, .Down), (1278, .Up), (1357, .Left), (1547, .Right), (1576, .Up), (1620, .Right), (1709, .Up),
+        (1770, .Right), (1808, .Down), (1883, .Left), (1919, .Down) */
+    ]
+
     // ============================================================
     //  General methods in this class
     // ============================================================
@@ -141,7 +160,7 @@ class CgContext {
     
     /// Set difficulty of the round
     func setDifficulty() {
-        let index = round-1
+        let index = demo ? 0 : round-1
         let count = table_difficultySettings.count
         let table = (index < count) ? table_difficultySettings[index] : table_difficultySettings[count-1]
         
@@ -262,6 +281,19 @@ class CgContext {
     func judgeBlinkySpurt() -> Bool {
         let feedsRemain: Int = numberOfFeeds - numberOfFeedsEated
         return (feedsRemain <= numberOfFeedsRemaingToSpurt)
+    }
+    
+    /// Get player operation for demonstration
+    /// - Returns: Direction
+    func getOperationForDemo() -> EnDirection {
+        guard(demoSequence < table_operationInDemo.count) else { return .None }
+        let table = table_operationInDemo[demoSequence]
+        var direction: EnDirection = .None
+        if counterByFrame >= table.frameCount {
+            direction = table.direction
+            demoSequence += 1
+        }
+        return direction
     }
 
 }

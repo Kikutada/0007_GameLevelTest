@@ -273,14 +273,6 @@ class CbScene : CbContainer {
         return next_sequence
     }
 
-    /// Go to specified sequence number
-    /// - Parameter number: Sequence number(from 0  to n)
-    func goToSequence(number: Int) {
-        timer_sequence.stop()
-        current_sequence = number
-        next_sequence = number
-    }
-    
     /// Go to next sequence after the specified time
     /// - Parameters:
     ///   - number: Sequence number
