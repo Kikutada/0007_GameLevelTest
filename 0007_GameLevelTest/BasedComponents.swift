@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Frame time of system at 60fps
 let SYSTEM_FRAME_TIME = 16 //ms
 
 /// Based object class

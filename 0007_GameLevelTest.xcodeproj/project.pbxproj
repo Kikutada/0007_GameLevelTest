@@ -147,8 +147,8 @@
 			children = (
 				D84417772519ED9000E7CC99 /* AppDelegate.swift */,
 				D844177F2519ED9000E7CC99 /* GameViewController.swift */,
-				D84417D22519F02500E7CC99 /* GameMain.swift */,
 				D844177D2519ED9000E7CC99 /* GameScene.swift */,
+				D84417D22519F02500E7CC99 /* GameMain.swift */,
 				D84417D12519F02500E7CC99 /* GameMaze.swift */,
 				D84417C42519F01100E7CC99 /* GameContext.swift */,
 				D84417CE2519F02500E7CC99 /* GamePlayer.swift */,

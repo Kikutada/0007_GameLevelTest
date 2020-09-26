@@ -75,10 +75,14 @@ class CgGameMain : CgSceneFrame {
 
             case 1:
                 context.demo = false
-                scene_attractMode.stopSequence()
-                scene_attractMode.clear()
-                scene_maze.stopSequence()
-                scene_maze.clear()
+                if scene_attractMode.enabled {
+                    scene_attractMode.stopSequence()
+                    scene_attractMode.clear()
+                }
+                if scene_maze.enabled {
+                    scene_maze.stopSequence()
+                    scene_maze.clear()
+                }
 
                 context.credit += 1
                 scene_deposit.resetSequence()
