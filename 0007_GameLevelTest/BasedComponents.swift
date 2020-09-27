@@ -169,7 +169,7 @@ class CbTimer : CbObject {
     }
     
     func isCounting() -> Bool {
-        return self.enabled && currentTime > 0
+        return self.enabled && !eventFired
     }
     
     func isEventFired() -> Bool {

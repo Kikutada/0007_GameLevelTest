@@ -3,6 +3,7 @@
 //  0007_GameLevelTest
 //
 //  Created by Kikutada on 2020/09/22.
+//  Copyright © 2020 Kikutada All rights reserved.
 //
 
 import UIKit
