@@ -79,6 +79,7 @@ class CgSceneMaze: CgSceneFrame, ActorDeligate {
     private var ghosts = CgGhostManager()
     private var counter_judgeGhostsWavyChase: Int = 0
     private var counter_frame: Int = 0
+//    private var directionDemo: EnDirection = .None
 
     private var scene_intermission: [CgSceneFrame] = []
 
@@ -214,6 +215,14 @@ class CgSceneMaze: CgSceneFrame, ActorDeligate {
                 player.targetDirecition = direction
             }
         }
+        //  REMARK: Creation of demonstration data
+        //
+        //    else {
+        //        if directionDemo != player.targetDirecition {
+        //            directionDemo = player.targetDirecition
+        //            print(context.counterByFrame-1, directionDemo)
+        //        }
+        //    }
 
         // Player checks to collide ghost.
         let collisionResult = ghosts.detectCollision(playerPosition: player.position)
@@ -273,7 +282,7 @@ class CgSceneMaze: CgSceneFrame, ActorDeligate {
                 specialTarget.enabled = false
                 ghosts.stopWithoutEscaping()
                 sound.playSE(.EatGhost)
-                sound.stopBGM()  // REMARKS: To change playBGM(.BgmEscaping) immediately.
+                sound.stopBGM()  // REMARK: To change playBGM(.BgmEscaping) immediately.
                 goToNextSequence(.ReturnToUpdating, after: 1000)
 
             case .PlayerMiss:
@@ -397,7 +406,7 @@ class CgSceneMaze: CgSceneFrame, ActorDeligate {
             ghosts.setStateToFrightened(time: getTimeOfPlayerWithPower())
             addScore(pts: 50)
         } else {
-            sound.playSE(.EatDot)
+            sound.playSE(.EatFeed)
             addScore(pts: 10)
         }
         
@@ -539,6 +548,10 @@ class CgSceneMaze: CgSceneFrame, ActorDeligate {
         ghosts.drawTargetPosition(show: false)
     }
     
+    // ============================================================
+    //  Draw & Setup maze data
+    // ============================================================
+
     struct StMazePosition {
         var column: Int
         var row: Int

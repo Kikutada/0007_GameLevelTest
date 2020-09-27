@@ -11,10 +11,18 @@ import SpriteKit
 /// Main sequence of game scene.
 class CgGameMain : CgSceneFrame {
 
+    enum EnMainMode: Int {
+        case AttractMode = 0, CreditMode, WaitForStartButton, StartMode, PlayMode
+    }
+
+    enum EnSubMode: Int {
+        case Character = 0, StartDemo, PlayDemo
+    }
+
     private var scene_attractMode: CgSceneAttractMode!
+    private var scene_creditMode: CgSceneCreditMode!
     private var scene_maze: CgSceneMaze!
-    private var scene_deposit: CgSceneDeposit!
-    private var attarctMode: Int = 0
+    private var subMode: EnSubMode = .Character
 
     init(skscene: SKScene) {
         super.init()
@@ -26,8 +34,8 @@ class CgGameMain : CgSceneFrame {
         self.context = CgContext()
 
         scene_attractMode = CgSceneAttractMode(object: self)
+        scene_creditMode = CgSceneCreditMode(object: self)
         scene_maze = CgSceneMaze(object: self)
-        scene_deposit = CgSceneDeposit(object: self)
     }
 
     /// Event handler
@@ -37,84 +45,92 @@ class CgGameMain : CgSceneFrame {
     ///   - values: Parameters of message
     override func handleEvent(sender: CbObject, message: EnMessage, parameter values: [Int]) {
         if message == .Touch {
-            if getSequence() == 0 || getSequence() == 2 {
-                goToNextSequence()
+            if let mode: EnMainMode = EnMainMode(rawValue: getSequence()) {
+                if mode == .AttractMode || mode == .WaitForStartButton {
+                    goToNextSequence()
+                }
             }
         }
     }
-
+    
     /// Handle sequence
     /// To override in a derived class.
     /// - Parameter sequence: Sequence number
     /// - Returns: If true, continue the sequence, if not, end the sequence.
     override func handleSequence(sequence: Int) -> Bool {
-        
-        switch sequence {
-            case  0:
-                switch attarctMode {
-                    case 0:
-                        scene_attractMode.resetSequence()
-                        scene_attractMode.startSequence()
-                        attarctMode = 1
-                    case 1:
-                        if !scene_attractMode.enabled {
-                            context.demo = true
-                            sound.enableOutput(false)
-                            scene_maze.resetSequence()
-                            scene_maze.startSequence()
-                            attarctMode = 2
-                        }
-                    case 2:
-                        if !scene_maze.enabled {
-                            attarctMode = 0
-                        }
-                    default:
-                        break
-                }
+        guard let mode: EnMainMode = EnMainMode(rawValue: sequence) else { return false }
 
-
-            case 1:
-                context.demo = false
-                if scene_attractMode.enabled {
-                    scene_attractMode.stopSequence()
-                    scene_attractMode.clear()
-                }
-                if scene_maze.enabled {
-                    scene_maze.stopSequence()
-                    scene_maze.clear()
-                }
-
-                context.credit += 1
-                scene_deposit.resetSequence()
-                scene_deposit.startSequence()
-                sound.enableOutput(true)
-                sound.playSE(.Credit)
-                goToNextSequence()
-                
-            case 2:
-                // Forever loop
-                break
-
-            case 3:
-                context.credit -= 1
-                scene_deposit.stopSequence()
-                scene_maze.resetSequence()
-                scene_maze.startSequence()
-                goToNextSequence()
-                
-            case 4:
-                if !scene_maze.enabled {
-                    attarctMode = 0
-                    goToNextSequence(0)
-                }
-
-            default:
-                // Forever loop
-                break
+        switch mode {
+            case .AttractMode: attarctMode()
+            case .CreditMode: creditMode()
+            case .WaitForStartButton: break // Forever loop
+            case .StartMode: startMode()
+            case .PlayMode: playMode()
         }
         
         // Continue running sequence.
         return true
+    }
+
+    // ============================================================
+    //  Execute each mode.
+    // ============================================================
+
+    func attarctMode() {
+        switch subMode {
+            case .Character:
+                scene_attractMode.resetSequence()
+                scene_attractMode.startSequence()
+                subMode = .StartDemo
+
+            case .StartDemo:
+                if !scene_attractMode.enabled {
+                    context.demo = true
+                    sound.enableOutput(false)
+                    scene_maze.resetSequence()
+                    scene_maze.startSequence()
+                    subMode = .PlayDemo
+                }
+
+            case .PlayDemo:
+                if !scene_maze.enabled {
+                    subMode = .Character
+                }
+        }
+    }
+    
+    func creditMode() {
+        context.demo = false
+        if scene_attractMode.enabled {
+            scene_attractMode.stopSequence()
+            scene_attractMode.clear()
+        }
+        if scene_maze.enabled {
+            scene_maze.stopSequence()
+            scene_maze.clear()
+        }
+
+        context.credit += 1
+        scene_creditMode.resetSequence()
+        scene_creditMode.startSequence()
+        sound.enableOutput(true)
+        sound.playSE(.Credit)
+        goToNextSequence()
+    }
+    
+    func startMode() {
+        context.credit -= 1
+        scene_creditMode.stopSequence()
+        scene_maze.resetSequence()
+        scene_maze.startSequence()
+        goToNextSequence()
+    }
+
+    func playMode() {
+        if !scene_maze.enabled {
+            subMode = .Character
+            goToNextSequence(EnMainMode.AttractMode.rawValue)
+        }
     }
 
 }

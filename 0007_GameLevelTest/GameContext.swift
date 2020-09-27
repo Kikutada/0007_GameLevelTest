@@ -98,20 +98,11 @@ class CgContext {
         ]
 
     let table_operationInDemo: [ (frameCount: Int, direction: EnDirection) ] = [
-        (3, .Left), (33, .Down), (56, .Right), (76, .Down), (101, .Right), (211, .Up), (247, .Left),
-        (259, .Up), (284, .Right), (305, .Up), (327, .Left), (379, .Up), (462, .Left),
-        (515, .Left), (558, .Down), (578, .Left), (598, .Up), (702, .Left), (732, .Down),
-        (811, .Right), (893, .Up), (934, .Left), (1004, .Down), (1034, .Right),
-        (1168, .Down), (1249, .Right), (1341, .Down), (1392, .Left), (1439, .Down),
-        (1468, .Right), (1486, .Down), (1507, .Right), (1570, .Up), (1630, .Up),
-        (1665, .Right), (1826, .Up), (1903, .Left), (1974, .Down), (2002, .Left),
-        (2028, .Down), (2054, .Left), (2070, .Up), (2098, .Left), (2123, .Up)
-        /*
-        (1, .Right), (60, .Down), (80, .Right), (110, .Down), (150, .Left), (310, .Up), (380, .Right), (410, .Up),
-        (500, .Right), (530, .Up), (550, .Up), (570, .Right), (590, .Up), (610, .Left), (630, .Up), (660, .Left),
-        (740, .Down), (820, .Up), (840, .Right), (880, .Down), (960, .Left), (1083, .Up), (1120, .Down), (1172, .Right),
-        (1236, .Down), (1278, .Up), (1357, .Left), (1547, .Right), (1576, .Up), (1620, .Right), (1709, .Up),
-        (1770, .Right), (1808, .Down), (1883, .Left), (1919, .Down) */
+        (9, .Left), (36, .Down), (61, .Right), (82, .Down), (109, .Right), (133, .Up), (162, .Right),
+        (189, .Up), (215, .Right), (238, .Down), (261, .Right), (308, .Down), (335, .Left), (523, .Up),
+        (555, .Right), (569, .Up), (609, .Left), (632, .Up), (648, .Right), (684, .Up), (732, .Left),
+        (831, .Down), (864, .Left), (931, .Up), (948, .Left), (970, .Up), (1063, .Right), (1113, .Down),
+        (1157, .Right), (1218, .Down)
     ]
 
     // ============================================================

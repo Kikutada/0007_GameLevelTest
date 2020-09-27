@@ -40,6 +40,7 @@
 		D84418012519F0BC00E7CC99 /* 16_pacman_eatdot_256ms.wav in Resources */ = {isa = PBXBuildFile; fileRef = D84417F12519F0BC00E7CC99 /* 16_pacman_eatdot_256ms.wav */; };
 		D84418022519F0BC00E7CC99 /* 16_pacman_miss_1536ms.wav in Resources */ = {isa = PBXBuildFile; fileRef = D84417F22519F0BC00E7CC99 /* 16_pacman_miss_1536ms.wav */; };
 		D84418032519F0BC00E7CC99 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = D84417F32519F0BC00E7CC99 /* Actions.sks */; };
+		D84418112520C4F900E7CC99 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = D84418102520C4F900E7CC99 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +98,7 @@
 		D84417F12519F0BC00E7CC99 /* 16_pacman_eatdot_256ms.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 16_pacman_eatdot_256ms.wav; sourceTree = "<group>"; };
 		D84417F22519F0BC00E7CC99 /* 16_pacman_miss_1536ms.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 16_pacman_miss_1536ms.wav; sourceTree = "<group>"; };
 		D84417F32519F0BC00E7CC99 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
+		D84418102520C4F900E7CC99 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 		D844176B2519ED9000E7CC99 = {
 			isa = PBXGroup;
 			children = (
+				D84418102520C4F900E7CC99 /* README.md */,
 				D84417762519ED9000E7CC99 /* 0007_GameLevelTest */,
 				D84417752519ED9000E7CC99 /* Products */,
 			);
@@ -307,6 +310,7 @@
 				D84418012519F0BC00E7CC99 /* 16_pacman_eatdot_256ms.wav in Resources */,
 				D84417FC2519F0BC00E7CC99 /* 16_BGM_return_528ms.wav in Resources */,
 				D84417F42519F0BC00E7CC99 /* 16_BGM_spurt4_512ms.wav in Resources */,
+				D84418112520C4F900E7CC99 /* README.md in Resources */,
 				D84418002519F0BC00E7CC99 /* 16_pacman_eatghost_544ms.wav in Resources */,
 				D84417F92519F0BC00E7CC99 /* 16_BGM_power_400ms.wav in Resources */,
 				D84417FF2519F0BC00E7CC99 /* 16_pacman_beginning_4224ms.wav in Resources */,

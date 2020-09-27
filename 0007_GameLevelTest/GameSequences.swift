@@ -605,13 +605,8 @@ class CgSceneIntermission3: CgSceneFrame {
     }
 }
 
-class CgSceneDeposit : CgSceneFrame {
-
-    override func handleEvent(sender: CbObject, message: EnMessage, parameter values: [Int]) {
-        if message == .Touch {
-            goToNextSequence()
-        }
-    }
+/// Credit Mode
+class CgSceneCreditMode : CgSceneFrame {
 
     /// Handle sequence
     /// To override in a derived class.
@@ -625,6 +620,7 @@ class CgSceneDeposit : CgSceneFrame {
                 printPlayerScore()
                 printHighScore()
                 printCredit()
+                printRounds()
                 background.print(0, color: .Orange, column: 6, row: 19, string: "PUSH START BUTTON")
                 background.print(0, color: .Cyan, column: 8, row: 15, string: "1 PLAYER ONLY")
 

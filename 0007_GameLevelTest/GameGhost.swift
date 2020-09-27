@@ -604,7 +604,7 @@ class CgGhost : CgActor {
             state.update()
         }
 
-        //　REMARKS: When Ghost returns to the nest, it will stop while Pacman eats the ghost.
+        //　REMARK: When Ghost returns to the nest, it will stop while Pacman eats the ghost.
         if state.getNext() == .Standby && deligateActor.isSuspendUpdating() {
             self.enabled = false
             return
@@ -922,10 +922,9 @@ class CgGhost : CgActor {
         var _speed = speed
         var nextDirection = direction.get()
 
-        // REMARKS:
-        //   After the ghost changes direction,
-        //   move one dot or more and then change the next direction.
-        //   Without this code, ghost will quickly change directions.
+        // REMARK: Without this code, ghost will quickly change directions.
+        //         After the ghost changes direction,
+        //         move one dot or more and then change the next direction.
         if position.amountMoved > 0 {
             if targetSelected {
                 nextDirection = decideDirectionByTarget(oneWayProhibition: oneWayProhibition)

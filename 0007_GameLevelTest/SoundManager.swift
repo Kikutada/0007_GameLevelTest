@@ -14,7 +14,7 @@ class CgSoundManager: CbContainer {
 
     /// Kind of sound items to play back
     enum EnKindOfSound: Int {
-        case EatDot = 0
+        case EatFeed = 0
         case EatFruit
         case EatGhost
         case Miss
@@ -33,7 +33,7 @@ class CgSoundManager: CbContainer {
 
     /// List of sound files to load
     private let table_urls: [[(resourceName: String, typeName: String, interval: Int)]] = [
-        [ ("16_pacman_eatdot_256ms", "wav", 256) ],
+        [ ("16_pacman_eatdot_256ms", "wav", 239) ],
         [ ("16_pacman_eatfruit_438ms", "wav", 438) ],
         [ ("16_pacman_eatghost_544ms", "wav", 544) ],
         [ ("16_pacman_miss_1536ms", "wav", 1536) ],
@@ -56,7 +56,7 @@ class CgSoundManager: CbContainer {
     private var soundEnabled = true
     
     /// Adjustment time for processing to play sound
-    private let triggerThresholdTime: Int = 32 //ms
+    private let triggerThresholdTime: Int = 48 //ms
 
     private var bgmEnabled: Bool = false
     private var bgmNumber: Int = -1
