@@ -54,7 +54,7 @@ class CgContext {
     //  Settings
     // ============================================================
 
-    let table_difficultySettings: [(round: Int, levelOfSpeed: EnLevel, timeWithPower: Int, numberOfFeedsRemaingToSpurt: Int, levelOfAppearance: EnLevel, kindOfSpecialTarget: CgSpecialTarget.EnSpecialTarget, timeNotToEat: Int, imtermission: Int)] = [
+    let table_difficultySettings: [(round: Int, levelOfSpeed: EnLevel, timeWithPower: Int, numberOfFeedsRemaingToSpurt: Int, levelOfAppearance: EnLevel, kindOfSpecialTarget: CgSpecialTarget.EnSpecialTarget, timeNotToEat: Int, intermission: Int)] = [
             //round, speedLevel, PowerTime[ms], Spurtfeeds, GhostAppear, SpecialTarget, NoEatTime[ms], Intermission
             (     1,   .Level_A,          6000,         20,    .Level_A,      .Cherry,           4000,            0 ),
             (     2,   .Level_B,          5000,         30,    .Level_B,  .Strawberry,           4000,            1 ),
@@ -161,7 +161,7 @@ class CgContext {
         levelOfAppearance = table.levelOfAppearance
         kindOfSpecialTarget = table.kindOfSpecialTarget
         timeNotToEat = table.timeNotToEat
-        intermission = table.imtermission
+        intermission = table.intermission
     }
     
     /// Get player speed
